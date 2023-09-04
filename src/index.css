@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+
+@layer {
+    .colorPrimary {
+        background-color: #002856;
+    }
+    .text-primary {
+        color:  #002856;
+    }
+    .principal {
+        width: calc(100vw - 300px);
+        position: absolute;
+        left: 300px;
+    }
+    .screen {
+        height: calc(100vh - 64px);
+    }
+}
