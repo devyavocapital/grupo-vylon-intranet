@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./modules/layout";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import Areas from "./pages/areas";
 import NewArea from "./pages/areas/NewArea";
 import Area from "./pages/areas/[id]";
@@ -31,6 +32,7 @@ function App() {
 				</Route>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Dashboard />} />
+					<Route path="mi-perfil" element={<Profile />} />
 				</Route>
 				<Route path="/colaboradores" element={<Layout />}>
 					<Route index element={<Employees />} />

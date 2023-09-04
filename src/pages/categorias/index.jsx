@@ -1,27 +1,27 @@
+import React, { useEffect, useState } from "react";
 import useMessages from "../../hooks/useMessages";
 import useToken from "../../hooks/useToken";
 import Button from "../../modules/common/components/Button";
 import Title from "../../modules/common/components/Title";
 import Table from "../../modules/common/table/Table";
 import { headers } from "../../utils/categories";
-import { fetched } from "../../utils/fetched";
-import React, { useEffect, useState } from "react";
+import { getCategories } from "../../utils/fetched";
 
 const Categories = () => {
 	const { token } = useToken();
 	const [categories, setCategories] = useState([]);
 	const { refresh } = useMessages();
 
-	const getCategories = async () => {
-		const responseCategories = await fetched(token, "GET", {}, "categories");
-		setCategories(responseCategories[0]);
+	const getData = async () => {
+		setCategories(await getCategories(token));
 	};
+
 	useEffect(() => {
-		getCategories();
+		getData();
 	}, []);
 
 	useEffect(() => {
-		refresh && getCategories();
+		refresh && getData();
 	}, [refresh]);
 
 	return (

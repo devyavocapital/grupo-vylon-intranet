@@ -5,7 +5,7 @@ import ModuleDays from "../../modules/common/vacations/ModuleDays";
 import ModuleOwnVacation from "../../modules/common/vacations/ModuleOwnVacation";
 import ModuleRequest from "../../modules/common/vacations/ModuleRequest";
 import ModuleToApprove from "../../modules/common/vacations/ModuleToApprove";
-import { fetched } from "../../utils/fetched";
+import { getUser, getVacationPoint, getVacations } from "../../utils/fetched";
 import { formatDateMin } from "../../utils/formatDate";
 
 const Vacations = () => {
@@ -16,42 +16,24 @@ const Vacations = () => {
 	const [request, setRequest] = useState({});
 	const [list, setList] = useState();
 	const [approve, setApprove] = useState([]);
-
 	const minDate = formatDateMin();
 
 	useEffect(() => {
-		const getUser = async () => {
-			const user = await fetched(token, "GET", {}, "login");
-			setIdUser(user.usuario[0][0].id);
-			const idUser = user.usuario[0][0].id;
-			const response = await fetched(
-				token,
-				"GET",
-				{},
-				`vacations?id=${idUser}`,
-			);
-			const vacations = response[0][0];
+		const getData = async () => {
+			const user = await getUser(token);
+			const idUser = user.id;
+			setIdUser(idUser);
+
+			const vacations = await getVacations(token, idUser);
 			vacations === undefined
 				? setDays({ id: 0, id_user: idUser, available_days: 0, days_off: 0 })
 				: setDays(vacations);
 
-			const responseList = await fetched(
-				token,
-				"GET",
-				{},
-				`vacations/list?id=${idUser}`,
-			);
-			setList(responseList[0]);
+			setList(await getVacationPoint(token, idUser, true));
 
-			const toApprove = await fetched(
-				token,
-				"GET",
-				{},
-				`vacations/request?id=${idUser}`,
-			);
-			setApprove(toApprove[0]);
+			setApprove(await getVacationPoint(token, idUser, false));
 		};
-		getUser();
+		getData();
 	}, []);
 
 	const handleChange = (e) => {

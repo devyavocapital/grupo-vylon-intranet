@@ -1,31 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useToken from "../../hooks/useToken";
 import useUser from "../../hooks/useUser";
 import Button from "../../modules/common/components/Button";
 import Title from "../../modules/common/components/Title";
 import Item from "../../modules/common/procedures/Item";
+import { getProcedures } from "../../utils/fetched";
 
 const Procedures = () => {
-	const [currentId, setCurrentId] = useState(0);
-	const [prevId, setPrevId] = useState(null);
-	const [beforePrev, setBeforePrev] = useState(null);
+	const { token } = useToken();
 	const { currentUser } = useUser();
+	const [proceduresList, setProceduresList] = useState([]);
+	const [currentId, setCurrentId] = useState(0);
+	const [proceduresPrev, setProceduresPrev] = useState([]);
+	const [prevId, setPrevId] = useState(null);
+	const [proceduresBeforePrev, setProceduresBeforePrev] = useState([]);
+	const [beforePrev, setBeforePrev] = useState(null);
 	const { id_category } = currentUser;
 
-	const proceduresList = [
-		{ id: 1, name: "Procedimientos de Operaciones", parentId: 0 },
-		{ id: 2, name: "Procedimientos de Recursos Humanos", parentId: 0 },
-		{ id: 3, name: "Procedimientos de Comercios", parentId: 1 },
-		{ id: 4, name: "Procedimientos de Aclaraciones", parentId: 1 },
-		{ id: 5, name: "Procedimientos de Reclutamiento", parentId: 2 },
-		{ id: 6, name: "Procedimientos de Vacaciones", parentId: 2 },
-		{ id: 7, name: "Procedimientos de Alta Comercios", parentId: 3 },
-		{ id: 8, name: "Procedimientos de Aclaraciones Comercios", parentId: 3 },
-		{ id: 9, name: "Procedimientos de Consulta de Saldos", parentId: 4 },
-		{ id: 10, name: "Procedimientos de Baja de Tarjetas", parentId: 4 },
-		{ id: 11, name: "Procedimientos de Entrevistas", parentId: 5 },
-		{ id: 12, name: "Procedimientos para altas ", parentId: 6 },
-		{ id: 13, name: "Procedimientos de Sistemas ", parentId: 0 },
-	];
+	const getData = async () => {
+		console.log(await getProcedures(token));
+		setProceduresList(await getProcedures(token));
+	};
+
+	useEffect(() => getData(), []);
 
 	const handleCurrentId = (id) => {
 		if (prevId === null) {
@@ -83,15 +80,15 @@ const Procedures = () => {
 					<div className={classesCotainer}>
 						{proceduresList.map(
 							(procedure) =>
-								procedure.parentId === beforePrev && (
+								procedure.parent === beforePrev && (
 									<Item
 										key={procedure.id}
 										currentId={currentId}
 										prevId={prevId}
 										id={procedure.id}
-										name={procedure.name}
+										name={procedure.control_name}
 										onclick={() =>
-											handleBeforePrev(procedure.id, procedure.parentId)
+											handleBeforePrev(procedure.id, procedure.parent)
 										}
 									/>
 								),
@@ -102,16 +99,14 @@ const Procedures = () => {
 					<div className={classesCotainer}>
 						{proceduresList.map(
 							(procedure) =>
-								procedure.parentId === prevId && (
+								procedure.parent === prevId && (
 									<Item
 										key={procedure.id}
 										currentId={currentId}
 										prevId={prevId}
 										id={procedure.id}
-										name={procedure.name}
-										onclick={() =>
-											handlePrevId(procedure.id, procedure.parentId)
-										}
+										name={procedure.control_name}
+										onclick={() => handlePrevId(procedure.id, procedure.parent)}
 									/>
 								),
 						)}
@@ -120,14 +115,17 @@ const Procedures = () => {
 				<div className={classesCotainer}>
 					{proceduresList.map(
 						(procedure) =>
-							procedure.parentId === currentId && (
+							procedure.parent === currentId && (
 								<Item
 									key={procedure.id}
 									currentId={currentId}
 									prevId={prevId}
 									id={procedure.id}
-									name={procedure.name}
-									onclick={() => handleCurrentId(procedure.id)}
+									name={procedure.control_name}
+									onclick={() => {
+										handleCurrentId(procedure.id);
+										getData();
+									}}
 								/>
 							),
 					)}

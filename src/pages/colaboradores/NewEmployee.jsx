@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import useMessages from "../../hooks/useMessages";
 import useToken from "../../hooks/useToken";
 import Button from "../../modules/common/components/Button";
-import { fetched } from "../../utils/fetched";
+import {
+	fetched,
+	getAreas,
+	getCategories,
+	getEmployees,
+} from "../../utils/fetched";
 import { formClasses } from "../../utils/formClasses";
 
 const NewEmployee = () => {
@@ -20,12 +25,9 @@ const NewEmployee = () => {
 
 	useEffect(() => {
 		const getOthers = async () => {
-			const responseAreas = await fetched(token, "GET", {}, "areas");
-			setAreas(responseAreas[0]);
-			const responseCategories = await fetched(token, "GET", {}, "categories");
-			setCategories(responseCategories[0]);
-			const responseUsers = await fetched(token, "GET", {}, "users");
-			setUsers(responseUsers[0]);
+			setAreas(await getAreas(token));
+			setCategories(await getCategories(token));
+			setUsers(await getEmployees(token));
 		};
 		getOthers();
 	}, []);

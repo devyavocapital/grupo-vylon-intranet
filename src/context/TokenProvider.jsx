@@ -16,7 +16,7 @@ const TokenProvider = ({ children }) => {
 				return;
 			}
 
-			setToken(tokenStorage);
+			handleToken(tokenStorage);
 		};
 
 		validateToken();

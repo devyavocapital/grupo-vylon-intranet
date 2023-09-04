@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useToken from "../../hooks/useToken";
 import Button from "../../modules/common/components/Button";
 import Title from "../../modules/common/components/Title";
-import { fetched } from "../../utils/fetched";
+import { getReleases } from "../../utils/fetched";
 
 const Communication = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -16,12 +16,11 @@ const Communication = () => {
 	};
 
 	useEffect(() => {
-		const getReleases = async () => {
-			const releases = await fetched(token, "GET", {}, "releases");
-			setImages(releases[0]);
+		const getData = async () => {
+			setImages(await getReleases(token));
 		};
 
-		getReleases();
+		getData();
 	}, []);
 
 	return (

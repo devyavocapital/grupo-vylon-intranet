@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import useMessages from "../../hooks/useMessages";
 import useUser from "../../hooks/useUser";
-import { profileMenu } from "../../utils/menu";
 import ToastError from "../common/components/ToastError";
 import ToastOk from "../common/components/ToastOk";
 
@@ -18,7 +17,7 @@ const Navbar = () => {
 						className="rounded-full w-14"
 					/>
 					<Link
-						to={`/colaboradores/${currentUser.id}`}
+						to={"/mi-perfil"}
 						className="absolute top-7 -right-2 bg-white rounded-full p-2 border-2 border-indigo-700 hover:bg-indigo-700 hover:text-white"
 					>
 						<svg
@@ -39,7 +38,7 @@ const Navbar = () => {
 					</Link>
 				</div>
 				<p>{`${currentUser.name} ${currentUser.lastname}`}</p>
-				<div
+				{/* <div
 					id="dropdown"
 					className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
 				>
@@ -52,7 +51,7 @@ const Navbar = () => {
 								<Link
 									to={
 										item.title === "Editar perfil"
-											? `${item.href}/${currentUser.id}`
+											? `${item.href}/mi-perfil`
 											: item.href
 									}
 									className="block px-4 py-2 hover:bg-gray-100"
@@ -62,7 +61,7 @@ const Navbar = () => {
 							</li>
 						))}
 					</ul>
-				</div>
+				</div> */}
 			</div>
 			{msg && <ToastOk message={msg} />}
 			{error && <ToastError error={error} />}

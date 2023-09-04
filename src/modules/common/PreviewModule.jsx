@@ -1,11 +1,16 @@
-const PreviewModule = ({ title, imgSrc, color }) => {
+import { Link } from "react-router-dom";
+
+const PreviewModule = ({ title, imgSrc, color, url }) => {
 	return (
 		<div
 			className={`bg-gradient-to-t  ${color} mx-10 rounded-2xl h-36 my-2 flex`}
 		>
-			<h2 className="text-white text-2xl font-bold my-3 place-self-end pl-5 w-5/12">
+			<Link
+				to={url}
+				className="text-white text-2xl font-bold my-3 place-self-end pl-5 w-5/12 hover:underline"
+			>
 				{title}
-			</h2>
+			</Link>
 			<img
 				alt=""
 				src={imgSrc}

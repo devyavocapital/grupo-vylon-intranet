@@ -5,24 +5,23 @@ import Button from "../../modules/common/components/Button";
 import Title from "../../modules/common/components/Title";
 import Table from "../../modules/common/table/Table";
 import { headers } from "../../utils/areas";
-import { fetched } from "../../utils/fetched";
+import { getAreas } from "../../utils/fetched";
 
 const Areas = () => {
 	const { token } = useToken();
 	const [areas, setAreas] = useState([]);
 	const { refresh } = useMessages();
 
-	const getAreas = async () => {
-		const responseAreas = await fetched(token, "GET", {}, "areas");
-		setAreas(responseAreas[0]);
+	const getData = async () => {
+		setAreas(await getAreas(token));
 	};
 
 	useEffect(() => {
-		getAreas();
+		getData();
 	}, []);
 
 	useEffect(() => {
-		refresh && getAreas();
+		refresh && getData();
 	}, [refresh]);
 
 	return (

@@ -5,23 +5,23 @@ import Button from "../../modules/common/components/Button";
 import Title from "../../modules/common/components/Title";
 import Table from "../../modules/common/table/Table";
 import { headersEmployee } from "../../utils/employees";
-import { fetched } from "../../utils/fetched";
+import { getEmployees } from "../../utils/fetched";
 
 const Employees = () => {
 	const { token } = useToken();
 	const [employees, setEmployees] = useState([]);
 	const { refresh } = useMessages();
 
-	const getEmployees = async () => {
-		const responseEmployees = await fetched(token, "GET", {}, "users");
-		setEmployees(responseEmployees[0]);
+	const getData = async () => {
+		setEmployees(await getEmployees(token));
 	};
+
 	useEffect(() => {
-		getEmployees();
+		getData();
 	}, []);
 
 	useEffect(() => {
-		refresh && getEmployees();
+		refresh && getData();
 	}, [refresh]);
 
 	return (

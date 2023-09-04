@@ -2,7 +2,7 @@ import React from "react";
 import { previews } from "../utils/previews";
 import PreviewModule from "./common/PreviewModule";
 
-const ModulePreviews= () => {
+const ModulePreviews = () => {
 	return (
 		<div className="grid grid-cols-2 my-10">
 			{previews.map((preview) => (
@@ -11,6 +11,7 @@ const ModulePreviews= () => {
 					imgSrc={preview.imgSrc}
 					color={preview.color}
 					key={preview.title}
+					url={preview.url}
 				/>
 			))}
 		</div>

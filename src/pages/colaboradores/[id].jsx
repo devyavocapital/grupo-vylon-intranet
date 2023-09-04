@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import useMessages from "../../hooks/useMessages";
 import useToken from "../../hooks/useToken";
 import Button from "../../modules/common/components/Button";
-import { fetched } from "../../utils/fetched";
+import {
+	fetched,
+	getAreas,
+	getCategories,
+	getEmployees,
+	getOneEmployees,
+} from "../../utils/fetched";
 import { formClasses } from "../../utils/formClasses";
 
 const Employee = () => {
@@ -21,15 +27,13 @@ const Employee = () => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const responseAreas = await fetched(token, "GET", {}, "areas");
-			setAreas(responseAreas[0]);
-			const responseCategories = await fetched(token, "GET", {}, "categories");
-			setCategories(responseCategories[0]);
-			const responseUsers = await fetched(token, "GET", {}, "users");
-			setUsers(responseUsers[0]);
-			const responseUser = await fetched(token, "GET", {}, `users?id=${query}`);
-			const user = responseUser[0][0];
-			console.log(user);
+			setAreas(await getAreas(token));
+			setCategories(await getCategories(token));
+			setUsers(await getEmployees(token));
+			// const responseUser = await fetched(token, "GET", {}, `users?id=${query}`);
+			// // const user = responseUser[0][0];
+			// // console.log(user);
+			const user = await getOneEmployees(token, query);
 			setValues({
 				id: query,
 				name: user.name,

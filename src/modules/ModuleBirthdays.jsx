@@ -2,7 +2,6 @@ import React from "react";
 import HbdItem from "./common/HbdItem";
 import Button from "./common/components/Button";
 
-
 const ModuleBirthdays = ({ usersHBD }) => {
 	return (
 		<div className="flex w-full">
@@ -16,12 +15,14 @@ const ModuleBirthdays = ({ usersHBD }) => {
 							<HbdItem name={user.name} key={user.id} />
 						))}
 					</div>
-					<Button
-						title="Ver todos"
-						background={false}
-						href="/cumpleaños"
-						iconType=""
-					/>
+					<div className="w-10/12 grid mx-auto">
+						<Button
+							title="Ver todos"
+							background={false}
+							href="/cumpleaños"
+							iconType=""
+						/>
+					</div>
 				</article>
 				<img
 					alt=""
