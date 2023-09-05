@@ -39,8 +39,8 @@ const ModuleOwnVacation = ({ list, setEdit }) => {
 									{item.request_days}
 								</th>
 								<td className="px-6 py-4">{item.request_date.slice(0, 10)}</td>
-								<td className="px-6 py-4">{item.date_to}</td>
-								<td className="px-6 py-4">{item.date_from}</td>
+								<td className="px-6 py-4">{item.date_to.slice(0, 10)}</td>
+								<td className="px-6 py-4">{item.date_from.slice(0, 10)}</td>
 								<td className="px-6 py-4">
 									{item.fullName === null ? "Sin autorización" : item.fullName}
 								</td>

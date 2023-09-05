@@ -1,7 +1,9 @@
 import React from "react";
 import Button from "../components/Button";
+import Indicator from "./Indicator";
 
-const ModuleToApprove = ({ approve, handleApprove }) => {
+const ModuleToApprove = ({ approve, handleApprove, handleApproveDelete }) => {
+	console.log(approve);
 	return (
 		<section className="mt-5 col-span-2">
 			<h3 className="text-xl font-bold">Para Aprobar</h3>
@@ -46,21 +48,28 @@ const ModuleToApprove = ({ approve, handleApprove }) => {
 									{item.request_days}
 								</th>
 								<td className="px-6 py-4">{item.request_date.slice(0, 10)}</td>
-								<td className="px-6 py-4">{item.date_to}</td>
-								<td className="px-6 py-4">{item.date_from}</td>
+								<td className="px-6 py-4">{item.date_to.slice(0, 10)}</td>
+								<td className="px-6 py-4">{item.date_from.slice(0, 10)}</td>
 								<td className="px-6 py-4">
 									{item.id_user_approve === null ? (
-										<Button
-											background={true}
-											onclick={() =>
-												handleApprove(item.id_user, item.id_request)
-											}
-											title={"Aprobar Vacaciones"}
-										/>
+										<div className="flex gap-4 mx-5">
+											<Button
+												background={true}
+												onclick={() =>
+													handleApprove(item.id_user, item.id_request)
+												}
+												title={"Autorizar"}
+											/>
+											<Button
+												background={true}
+												onclick={() => handleApproveDelete(item.id_request)}
+												title={"NO Autorizar"}
+											/>
+										</div>
 									) : (
-										<p className="uppercase text-lg text-green-700 font-bold">
-											Aprobadas
-										</p>
+										<div className="w-full text-center">
+											<Indicator color={"green"} title={"Autorizadas"} />
+										</div>
 									)}
 								</td>
 							</tr>

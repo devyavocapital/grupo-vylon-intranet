@@ -5,8 +5,13 @@ import ModuleDays from "../../modules/common/vacations/ModuleDays";
 import ModuleOwnVacation from "../../modules/common/vacations/ModuleOwnVacation";
 import ModuleRequest from "../../modules/common/vacations/ModuleRequest";
 import ModuleToApprove from "../../modules/common/vacations/ModuleToApprove";
-import { getUser, getVacationPoint, getVacations } from "../../utils/fetched";
-import { formatDateMin } from "../../utils/formatDate";
+import {
+	fetched,
+	getUser,
+	getVacationPoint,
+	getVacations,
+} from "../../utils/fetched";
+import { formatDateMin, getCurrentDay } from "../../utils/formatDate";
 
 const Vacations = () => {
 	const { token } = useToken();
@@ -17,6 +22,7 @@ const Vacations = () => {
 	const [list, setList] = useState();
 	const [approve, setApprove] = useState([]);
 	const minDate = formatDateMin();
+	const currentDay = getCurrentDay();
 
 	useEffect(() => {
 		const getData = async () => {
@@ -36,6 +42,14 @@ const Vacations = () => {
 		getData();
 	}, []);
 
+	const showMessage = (response) => {
+		if (response?.error) {
+			handleError(response.error);
+			return;
+		}
+		handleMessage(response.msg);
+	};
+
 	const handleChange = (e) => {
 		setRequest({
 			...request,
@@ -45,26 +59,32 @@ const Vacations = () => {
 
 	const handleVacations = async () => {
 		const data = { ...request, id: idUser };
+		console.log(data);
 		const response = await fetched(token, "POST", data, "vacations/request");
-		if (response?.error) {
-			handleError(response.error);
-			return;
-		}
-		handleMessage(response.msg);
+		showMessage(response);
+		setList([
+			...list,
+			{
+				request_days: request.requestDays,
+				date_to: request.dateTo,
+				date_from: request.dateFrom,
+				fullName: null,
+				request_date: currentDay,
+			},
+		]);
 	};
 
 	const handleApprove = async (idUser, idRequest) => {
-		console.log(idUser, idRequest);
 		const data = { id: idUser, idRequest };
 		const response = await fetched(token, "PUT", data, "vacations/request");
-		console.log(response);
+		showMessage(response);
+	};
 
-		if (response?.error) {
-			handleError(response.error);
-			return;
-		}
-
-		handleMessage(response.msg);
+	const handleApproveDelete = async (idRequest) => {
+		const data = { idRequest };
+		const response = await fetched(token, "DELETE", data, "vacations/request");
+		showMessage(response);
+		setApprove(approve.filter((request) => request.id_request !== idRequest));
 	};
 
 	return (
@@ -74,17 +94,23 @@ const Vacations = () => {
 				days_off={days.days_off}
 			/>
 
-			<ModuleRequest
-				handleChange={handleChange}
-				handleVacations={handleVacations}
-				minDate={minDate}
-				days={days}
-			/>
+			{days.available_days > 0 && (
+				<ModuleRequest
+					handleChange={handleChange}
+					handleVacations={handleVacations}
+					minDate={minDate}
+					days={days}
+				/>
+			)}
 
 			<ModuleOwnVacation list={list} />
 
 			{approve.length > 0 && (
-				<ModuleToApprove approve={approve} handleApprove={handleApprove} />
+				<ModuleToApprove
+					approve={approve}
+					handleApprove={handleApprove}
+					handleApproveDelete={handleApproveDelete}
+				/>
 			)}
 		</main>
 	);

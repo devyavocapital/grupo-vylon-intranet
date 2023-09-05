@@ -46,6 +46,10 @@ export const getCategories = async (token) => {
 	return responseCategories[0];
 };
 
+export const getBirthdays = async (token) => {
+	const responseBirthdays = await fetched(token, "GET", {}, "users/birthdays");
+	return responseBirthdays[0];
+};
 export const getEmployees = async (token) => {
 	const responseEmployees = await fetched(token, "GET", {}, "users");
 	return responseEmployees[0];

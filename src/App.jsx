@@ -2,7 +2,9 @@ import "flowbite";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./modules/layout";
 import Dashboard from "./pages/Dashboard";
+import HappyBirthday from "./pages/HappyBirthday";
 import Login from "./pages/Login";
+import NoMatch from "./pages/NoMatch";
 import Profile from "./pages/Profile";
 import Areas from "./pages/areas";
 import NewArea from "./pages/areas/NewArea";
@@ -33,6 +35,7 @@ function App() {
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Dashboard />} />
 					<Route path="mi-perfil" element={<Profile />} />
+					<Route path="happy-birthday" element={<HappyBirthday />} />
 				</Route>
 				<Route path="/colaboradores" element={<Layout />}>
 					<Route index element={<Employees />} />
@@ -63,6 +66,7 @@ function App() {
 				<Route path="/recibos-nomina" element={<Layout />}>
 					<Route index element={<Dashboard />} />
 				</Route>
+				<Route path="*" element={<NoMatch />} />
 			</Routes>
 		</BrowserRouter>
 	);

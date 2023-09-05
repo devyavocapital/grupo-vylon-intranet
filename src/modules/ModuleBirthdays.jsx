@@ -11,15 +11,18 @@ const ModuleBirthdays = ({ usersHBD }) => {
 						¡Felicidades!
 					</h2>
 					<div className="text-md text-white text-center font-bold">
-						{usersHBD.map((user) => (
-							<HbdItem name={user.name} key={user.id} />
-						))}
+						{usersHBD.map(
+							(user, index) =>
+								index <= 4 && (
+									<HbdItem name={user.fullname} key={user.id_user} />
+								),
+						)}
 					</div>
 					<div className="w-10/12 grid mx-auto">
 						<Button
 							title="Ver todos"
 							background={false}
-							href="/cumpleaños"
+							href="/happy-birthday"
 							iconType=""
 						/>
 					</div>

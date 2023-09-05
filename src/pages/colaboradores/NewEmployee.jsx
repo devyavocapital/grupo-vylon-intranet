@@ -175,21 +175,7 @@ const NewEmployee = () => {
 						/>
 					</div>
 				</div>
-				<div className="grid md:grid-cols-2 md:gap-6">
-					<div className={fieldClasses}>
-						<input
-							type="email"
-							name="email"
-							id="email"
-							className={inputClasses}
-							placeholder=" "
-							required
-							onChange={(e) => handleChange(e)}
-						/>
-						<label htmlFor="email" className={labelClasses}>
-							Correo
-						</label>
-					</div>
+				<div className="grid md:grid-cols-3 md:gap-6">
 					<div className={fieldClasses}>
 						<label htmlFor="underline_select" className="sr-only">
 							Jefe inmediato
@@ -209,6 +195,32 @@ const NewEmployee = () => {
 								</option>
 							))}
 						</select>
+					</div>
+					<div className={`flex ${fieldClasses} justify-between`}>
+						<label htmlFor="" className="justify-center self-center mr-2">
+							Fecha de Nacimiento:
+						</label>
+						<input
+							type="date"
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-8/12"
+							placeholder="Select date"
+							onChange={(e) => handleChange(e)}
+							name="birthday"
+						/>
+					</div>
+					<div className={fieldClasses}>
+						<input
+							type="email"
+							name="email"
+							id="email"
+							className={inputClasses}
+							placeholder=" "
+							required
+							onChange={(e) => handleChange(e)}
+						/>
+						<label htmlFor="email" className={labelClasses}>
+							Correo
+						</label>
 					</div>
 				</div>
 				<div className="grid md:grid-cols-2 md:gap-6">

@@ -6,3 +6,13 @@ export const formatDateMin = () => {
 	const minDate = `${currentYear}-0${currentMonth}-${currentDay}`;
 	return minDate;
 };
+
+export const getCurrentDay = () => {
+	const date = new Date();
+	const currentDate = date.toLocaleDateString("es-MX", {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	});
+	return currentDate.replaceAll("/", "-");
+};

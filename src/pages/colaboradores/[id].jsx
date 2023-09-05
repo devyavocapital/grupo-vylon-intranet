@@ -30,9 +30,7 @@ const Employee = () => {
 			setAreas(await getAreas(token));
 			setCategories(await getCategories(token));
 			setUsers(await getEmployees(token));
-			// const responseUser = await fetched(token, "GET", {}, `users?id=${query}`);
-			// // const user = responseUser[0][0];
-			// // console.log(user);
+
 			const user = await getOneEmployees(token, query);
 			setValues({
 				id: query,
@@ -44,6 +42,8 @@ const Employee = () => {
 				position: user.position,
 				entryDate: user.entry_date,
 				boss_id: user.boss_id,
+				birthday:
+					user.birthday !== null ? user.birthday.slice(0, 10) : "2000-01-01",
 			});
 		};
 		getData();
@@ -58,6 +58,7 @@ const Employee = () => {
 		position,
 		entryDate,
 		boss_id,
+		birthday,
 	} = values;
 
 	const handleSubmit = async (e) => {
@@ -237,55 +238,21 @@ const Employee = () => {
 							))}
 						</select>
 					</div>
-				</div>
-
-				{/* <div className={fieldClasses}>
-					<input
-						type="email"
-						name="email"
-						id="email"
-						className={inputClasses}
-						placeholder=" "
-						required
-						onChange={(e) => handleChange(e)}
-					/>
-					<label htmlFor="email" className={labelClasses}>
-						Correo
-					</label>
-				</div>
-
-				<div className="grid md:grid-cols-2 md:gap-6">
-					<div className={fieldClasses}>
-						<input
-							type="password"
-							name="password"
-							id="password"
-							className={inputClasses}
-							placeholder=" "
-							required
-							onChange={(e) => handleChange(e)}
-						/>
-						<label htmlFor="password" className={labelClasses}>
-							Password
+					<div className={`flex ${fieldClasses} justify-between`}>
+						<label htmlFor="" className="justify-center self-center mr-2">
+							Fecha de Nacimiento:
 						</label>
-					</div>
-					<div className={fieldClasses}>
 						<input
-							type="password"
-							name="confirm_password"
-							id="confirm_password"
-							className={inputClasses}
-							placeholder=" "
-							required
+							type="date"
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-8/12"
+							placeholder="Select date"
 							onChange={(e) => handleChange(e)}
+							name="birthday"
+							value={birthday}
 						/>
-						<label htmlFor="confirm_password" className={labelClasses}>
-							Confirmar password
-						</label>
 					</div>
-				</div> */}
-
-				<Button background={true} iconType="" title="Agregar" href="" />
+				</div>
+				<Button background={true} iconType="" title="Guardar Cambios" href="" />
 			</form>
 		</main>
 	);
