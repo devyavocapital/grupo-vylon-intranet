@@ -11,18 +11,17 @@ const Procedures = () => {
 	const { currentUser } = useUser();
 	const [proceduresList, setProceduresList] = useState([]);
 	const [currentId, setCurrentId] = useState(0);
-	const [proceduresPrev, setProceduresPrev] = useState([]);
 	const [prevId, setPrevId] = useState(null);
-	const [proceduresBeforePrev, setProceduresBeforePrev] = useState([]);
 	const [beforePrev, setBeforePrev] = useState(null);
 	const { id_category } = currentUser;
 
-	const getData = async () => {
-		console.log(await getProcedures(token));
-		setProceduresList(await getProcedures(token));
-	};
-
-	useEffect(() => getData(), []);
+	useEffect(() => {
+		const getData = async () => {
+			console.log(await getProcedures(token));
+			setProceduresList(await getProcedures(token));
+		};
+		getData();
+	}, []);
 
 	const handleCurrentId = (id) => {
 		if (prevId === null) {

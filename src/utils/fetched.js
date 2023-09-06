@@ -59,13 +59,8 @@ export const getOneEmployees = async (token, idUser) => {
 	return responseUser[0][0];
 };
 
-export const getProcedures = async (token, idParent) => {
-	const proceduresList = await fetched(
-		token,
-		"GET",
-		{},
-		`procedures?id=null&idParent=${idParent}`,
-	);
+export const getProcedures = async (token) => {
+	const proceduresList = await fetched(token, "GET", {}, "procedures?id=null");
 	return proceduresList[0];
 };
 

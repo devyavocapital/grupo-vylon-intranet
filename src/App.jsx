@@ -20,7 +20,6 @@ import NewCommunication from "./pages/comunicados/NewCommunication";
 import Procedures from "./pages/procedimientos";
 import NewProcedure from "./pages/procedimientos/NewProcedure";
 import Vacations from "./pages/vacaciones";
-import Test from "./test";
 
 function App() {
 	return (
@@ -29,9 +28,9 @@ function App() {
 				<Route path="/login">
 					<Route index element={<Login />} />
 				</Route>
-				<Route path="/testing">
+				{/* <Route path="/testing">
 					<Route index element={<Test />} />
-				</Route>
+				</Route> */}
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Dashboard />} />
 					<Route path="mi-perfil" element={<Profile />} />

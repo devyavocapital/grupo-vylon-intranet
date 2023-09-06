@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import useUser from "../../hooks/useUser";
+import { permission } from "../../utils/config";
 import { getUser } from "../../utils/fetched";
-import { menuItems } from "../../utils/menu";
 import Spinner from "../common/components/Spinner";
 import Header from "./Header";
 
@@ -21,15 +21,15 @@ const Layout = () => {
 			const user = await getUser(token);
 			handleUser(user);
 			if (!token || !user) {
-				// localStorage.removeItem("yavocapital_session");
 				navigation("/login");
 			}
 
-			menuItems.map((item) =>
-				item.subitems.map(
-					({ categoriesUser }) =>
-						!categoriesUser.includes(user.id_category) && navigation("/"),
-				),
+			const location = window.location.pathname;
+			permission.filter(
+				({ href, categoriesUser }) =>
+					href === location &&
+					!categoriesUser.includes(user.id_category) &&
+					navigation("/"),
 			);
 		};
 

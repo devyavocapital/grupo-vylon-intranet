@@ -190,7 +190,7 @@ const NewEmployee = () => {
 								-- Jefe inmediato --
 							</option>
 							{users.map((user) => (
-								<option value={user.id_user} key={user.id_user}>
+								<option value={user.id_user} key={user.fullname}>
 									{user.fullname} - {user.name_area}
 								</option>
 							))}

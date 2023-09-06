@@ -10,7 +10,6 @@ const HappyBirthday = () => {
 		const getData = async () => {
 			const users = await getBirthdays(token);
 			setUsersBirthdays(users);
-			console.log(users.map((user) => user.birthday));
 		};
 		getData();
 	}, []);
